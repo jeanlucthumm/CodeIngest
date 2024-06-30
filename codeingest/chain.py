@@ -27,7 +27,7 @@ def clear_persist():
 
 def load_docs() -> VectorStoreRetriever:
     """Load the documents from the current directory and return a retriever."""
-    loader = DirectoryLoader(".", exclude=["poetry.lock"])
+    loader = DirectoryLoader(".", exclude=["poetry.lock", "*/__pycache__/*", "*.key"])
     docs = loader.load()
     splitter = RecursiveCharacterTextSplitter(chunk_size=1000, chunk_overlap=200)
     splits = splitter.split_documents(docs)
