@@ -15,8 +15,15 @@ from langchain_community.document_loaders import DirectoryLoader
 PERSIST_DIRECTORY = ".chromadb"
 
 
+def format_doc(doc: Document):
+    source = doc.metadata.get("source")
+    if source is not None:
+        return f"Source: {source}\n{doc.page_content}"
+    return doc.page_content
+
+
 def format_docs(docs: List[Document]):
-    return "\n\n".join(doc.page_content for doc in docs)
+    return "\n\n".join(format_doc(doc) for doc in docs)
 
 
 def clear_persist():
